@@ -9,6 +9,7 @@ import "./config/passport.js";
 import authRoutes from "./routes/authRoutes.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import User from "./models/User.js";
+import mediaRoutes from "./routes/mediaRoutes.js";
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use(
 
 // Auth routes
 app.use("/auth", authRoutes);
+app.use("/api/media", mediaRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
