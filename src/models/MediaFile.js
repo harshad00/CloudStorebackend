@@ -6,13 +6,18 @@ const mediaFileSchema = new mongoose.Schema({
     ref: "Media", // Link to media
     required: true,
   },
+  userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Reference to user
+      required: true,
+    },
   url: {
     type: String,
     required: true,
   },
   type: {
     type: String,
-    enum: ["image", "video", "audio", "document"],
+    enum: ["image", "video"],
     required: true,
   },
   size: {

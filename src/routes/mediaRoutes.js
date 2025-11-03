@@ -1,6 +1,11 @@
 import express from "express";
 import multer from "multer";
-import { uploadMedia } from "../controllers/uploadMedia.js";
+import {
+  uploadMedia,
+  addMediaFilesByMediaId,
+  getAllMedia
+
+} from "../controllers/uploadMedia.js";
 import {authMiddleware as protect} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -24,5 +29,7 @@ const upload = multer({
 
 // ✅ protect route with middleware
 router.post("/upload", protect, upload.array("files", 10), uploadMedia);
+router.post('/addMediaFilesByMediaId', protect, upload.array("files", 10), addMediaFilesByMediaId);
+router.get('/getAllMedia', protect, getAllMedia);
 
 export default router;
