@@ -23,8 +23,8 @@ export const loginSuccess = async (req, res) => {
 
   const cookieOptions = {
     httpOnly: true,
-    secure: process.env.COOKIE_SECURE === "true",
-    sameSite: "lax",
+    secure: process.env.COOKIE_SECURE === "true",  
+    sameSite: "none",  
     maxAge: 1000 * 60 * 60, // 1 hour
   };
 
