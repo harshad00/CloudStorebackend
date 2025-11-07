@@ -3,7 +3,8 @@ import multer from "multer";
 import {
   uploadMedia,
   addMediaFilesByMediaId,
-  getAllMediaByUserId
+  getAllMediaByUserId,
+  getMediaByMediaId
 
 } from "../controllers/uploadMedia.js";
 import {authMiddleware as protect} from "../middleware/authMiddleware.js";
@@ -31,5 +32,7 @@ const upload = multer({
 router.post("/upload", protect, upload.array("files", 10), uploadMedia);
 router.post('/addMediaFilesByMediaId', protect, upload.array("files", 10), addMediaFilesByMediaId);
 router.get('/getAllMedia', protect, getAllMediaByUserId);
+router.get('/getByMediaId', protect, getMediaByMediaId);
+
 
 export default router;

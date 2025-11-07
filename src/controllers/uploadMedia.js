@@ -3,6 +3,7 @@ import Media from "../models/Media.js";
 import MediaFile from "../models/MediaFile.js";
 import fs from "fs";
 import s3 from "../config/s3Config.js";
+import { log } from "console";
 
 
 export const uploadMedia = async (req, res) => {
@@ -68,23 +69,29 @@ export const uploadMedia = async (req, res) => {
   }
 };
 
-export const getMediaByTitle = async (req, res) => {
+export const getMediaByMediaId = async (req, res) => {
   try {
-    const { title } = req.params;
-    const userId = req.user.id;
-    const media = await Media.findOne({
-      userId,
-      title
-    }).collation({ locale: 'en', strength: 2 });
+    const { mediaId } = req.query; // ✅ get from query instead of params
+    const userId = req.user.id;  // ✅ ensure it’s filtered by logged-in user
 
+    if (!mediaId) {
+      return res.status(400).json({ error: "Title query parameter is required" });
+    }
+
+    const media = await MediaFile.find({
+      userId,
+      mediaId
+    }).collation({ locale: "en", strength: 2 }); // case-insensitive search
+  console.log(media);
+  
     if (!media) {
       return res.status(404).json({ error: "Media not found" });
     }
+
     res.status(200).json(media);
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching media by title:", error);
     res.status(500).json({ error: error.message });
-
   }
 };
 
